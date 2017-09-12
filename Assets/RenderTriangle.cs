@@ -5,6 +5,10 @@ using UnityEngine;
 public class RenderTriangle : MonoBehaviour {
 
     public float angle = 1;
+
+    public Vector3 scaleVector;
+    private Vector3 currentScaleVector;
+
     public Vector3 point;
     public static Material material;
     public static Mesh mesh;
@@ -33,14 +37,34 @@ public class RenderTriangle : MonoBehaviour {
 
         // Set vertex indicies
         mesh.triangles = new int[] { 0, 1, 2};
+
+        scaleVector = new Vector3(1f, 1f, 1f);
+        currentScaleVector = scaleVector;
         }
 	
 	// Update is called once per frame
 	void Update () {
         mesh.vertices = IGB283Transform.translate(mesh.vertices, point);
         
-        mesh.vertices = IGB283Transform.rotate(mesh.vertices, angle);
-        
+        mesh.vertices = IGB283Transform.rotate(mesh.vertices, angle * (Mathf.PI / 180f));
+
+        if (scaleVector.x == 0 || scaleVector.x == null) {
+            scaleVector = new Vector3(1, scaleVector.y, scaleVector.z);
+        }
+        if (scaleVector.y == 0 || scaleVector.y == null) {
+            scaleVector = new Vector3(scaleVector.x, 1, scaleVector.z);
+        }
+
+        if (scaleVector.x != currentScaleVector.x) {
+            mesh.vertices = IGB283Transform.scale(mesh.vertices, new Vector3(1f / currentScaleVector.x, 1f,1f) , currentScaleVector);
+            mesh.vertices = IGB283Transform.scale(mesh.vertices, scaleVector, currentScaleVector);
+            currentScaleVector = new Vector3(scaleVector.x, currentScaleVector.y, 0);
+        }
+        if (scaleVector.y != currentScaleVector.y) {
+            mesh.vertices = IGB283Transform.scale(mesh.vertices, new Vector3(1f / currentScaleVector.y, 1f, 1f), currentScaleVector);
+            mesh.vertices = IGB283Transform.scale(mesh.vertices, scaleVector, currentScaleVector);
+            currentScaleVector = new Vector3(currentScaleVector.x, scaleVector.y, 0);
+        }
         mesh.RecalculateBounds();
     }
 }
