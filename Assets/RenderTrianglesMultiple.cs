@@ -12,10 +12,12 @@ public class RenderTrianglesMultiple : MonoBehaviour {
     public Vector3 scaleVector;
     private Vector3 currentScaleVector;
 
+    public Color color = new Vector4(0.2F, 0.3F, 0.4F, 0.5F);
+
     public Vector3 point;
     public  Material material;
     public  Mesh mesh;
-    Vector3[] triangleVertecies = new Vector3[] { new Vector3(0, 0, 0), new Vector3(0, 1, 0), new Vector3(1, 1, 0), };
+    Vector3[] triangleVertecies = new Vector3[] { new Vector3(0, 0, 0), new Vector3(0, 1, 0), new Vector3(1, 1, 0) };
 
     // Use this for initialization
     void Start() {
@@ -27,17 +29,14 @@ public class RenderTrianglesMultiple : MonoBehaviour {
         mesh = GetComponent<MeshFilter>().mesh;
 
         // Set the material to the material we have selected
-        GetComponent<MeshRenderer>().material = material;
+        material = GetComponent< MeshRenderer > ().material;
 
         // Clear all vertex and index data from the mesh
         mesh.Clear();
-
         // Create a triangle with points at (0, 0, 0), (0, 1, 0) and(1, 1, 0)
         mesh.vertices = triangleVertecies;
 
-        // Set the colour of the triangle
-        mesh.colors = new Color[] { new Color(0.8f, 0.3f, 0.3f, 1.0f), new Color(0.8f, 0.3f, 0.3f, 1.0f), new Color(0.8f, 0.3f, 0.3f, 1.0f) };
-
+        calcColor();
         // Set vertex indicies
         mesh.triangles = new int[] { 0, 1, 2 };
 
@@ -80,8 +79,12 @@ public class RenderTrianglesMultiple : MonoBehaviour {
             point = point * 2;
         }
 
+        calcColor();
 
         mesh.RecalculateBounds();
+    }
+
+    private void calcColor() {        mesh.colors = new Color[] { color, color, color };
     }
 
     bool bouncy() {

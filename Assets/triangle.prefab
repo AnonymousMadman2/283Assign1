@@ -55,4 +55,7 @@ MonoBehaviour:
   point1: {fileID: 0}
   point2: {fileID: 0}
   scaleVector: {x: 0, y: 0, z: 0}
+  color: {r: 0.013300186, g: 0.458856, b: 0.9044118, a: 0.5}
   point: {x: 0, y: 0, z: 0}
+  material: {fileID: 0}
+  mesh: {fileID: 0}
