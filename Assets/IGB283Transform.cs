@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class IGB283Transform : MonoBehaviour {
 
+    public  static Vector3[] positionVertices;
+
     // Use this for initialization
     void Start () {
-		
+        positionVertices = new Vector3[] {
+            new Vector3(0f,0f,0f),
+            new Vector3(0f,0f,0f),
+            new Vector3(0f,0f,0f)
+        };
 	}
 	
 	// Update is called once per frame
@@ -24,7 +30,7 @@ public class IGB283Transform : MonoBehaviour {
         for (int i = 0; i < vertices.Length; i++) {
             vertices[i] = R.MultiplyPoint(vertices[i] - origin) + origin;
         }
-        
+        positionVertices = vertices;
         return vertices;
     }
 
@@ -45,9 +51,12 @@ public class IGB283Transform : MonoBehaviour {
         for (int i = 0; i < vertices.Length; i++) {
             vertices[i] += point;
         }
+
+        positionVertices = vertices;
         return vertices;
     }
 
+    
 
     ///v′  =  v  +  (k – 1)(v•n)n
     public static Vector3[] scale(Vector3[] vertices, Vector3 scaleVector, Vector3 currentScaleVector) {
@@ -71,21 +80,8 @@ public class IGB283Transform : MonoBehaviour {
 
         for (int i = 0; i < vertices.Length; i++) {
             vertices[i] = S.MultiplyPoint(vertices[i]);
-            /*
-            if (vertices[i].x < origin.x) {
-                vertices[i] -= new Vector3(-scaleFactor.x,0,0);
-            }else if (vertices[i].x > origin.x) {
-                vertices[i] -= new Vector3(scaleFactor.x, 0, 0);
-            }
-
-            if (vertices[i].y < origin.y) {
-                vertices[i] -= new Vector3(0, -scaleFactor.y, 0);
-            } else if (vertices[i].y > origin.y) {
-                vertices[i] -= new Vector3(0, scaleFactor.y, 0);
-            }
-            */
-
         }
+        positionVertices = vertices;
         return vertices;
     }
 
