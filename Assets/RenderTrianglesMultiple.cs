@@ -72,6 +72,13 @@ public class RenderTrianglesMultiple : MonoBehaviour {
 
         bouncy();
 
+        if (isMouseClick(0)) {
+            point = point / 2;
+        }
+        
+        if (isMouseClick(1)) {
+            point = point * 2;
+        }
 
 
         mesh.RecalculateBounds();
@@ -89,4 +96,43 @@ public class RenderTrianglesMultiple : MonoBehaviour {
         }
         return false;
     }
+
+    private bool isMouseClick(int btn) {
+        if (Input.GetMouseButtonDown(btn)) {
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+            float left = mesh.vertices[1].x;
+            float right = mesh.vertices[1].x;
+            float top = mesh.vertices[1].y;
+            float bottom = mesh.vertices[1].y;
+
+            //find highest, lowest, leftmost and rightmost points
+
+            for (int i = 0; i < mesh.vertices.Length; i++) {
+                if (mesh.vertices[i].x <= left) {
+                    left = mesh.vertices[i].x;
+                    print(left+ "   " + mousePos);
+                } else if(mesh.vertices[i].x >= right) {
+                    right = mesh.vertices[i].x;
+                }
+
+                if (mesh.vertices[i].y <= bottom) {
+                    bottom = mesh.vertices[i].y;
+                } else if (mesh.vertices[i].y >= top) {
+                    top = mesh.vertices[i].y;
+                }
+            }
+
+
+
+
+            if (mousePos.x <= right && mousePos.x >= left && mousePos.y <= top && mousePos.y >= bottom) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
+    }
+
 }

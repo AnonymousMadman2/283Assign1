@@ -14,10 +14,10 @@ public class SpawnTriangles : MonoBehaviour {
         for (int i = 0; i <= numOfTriangles; i++) {
             GameObject tri = Instantiate(Triangle);
             float triNum = i+1;
-            tri.GetComponent<RenderTrianglesMultiple>().angle = triNum*10;
+            tri.GetComponent<RenderTrianglesMultiple>().angle = triNum*1;
             tri.GetComponent<RenderTrianglesMultiple>().point1 = point1;
             tri.GetComponent<RenderTrianglesMultiple>().point2 = point2;
-            tri.GetComponent<RenderTrianglesMultiple>().point = new Vector3 (triNum/10, tri.GetComponent<RenderTrianglesMultiple>().point.y, 0);
+            tri.GetComponent<RenderTrianglesMultiple>().point = new Vector3 (triNum/100, tri.GetComponent<RenderTrianglesMultiple>().point.y, 0);
         }
     }
 	
